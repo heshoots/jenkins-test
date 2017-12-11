@@ -8,7 +8,7 @@ podTemplate(label: 'mypod', containers: [
       container('node') {
         sh """
         npm install
-        ./nodemodules/.bin/eslint .
+        npm lint
         """
       }
     }
