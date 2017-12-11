@@ -9,6 +9,11 @@ const users = require('./routes/users');
 
 const app = express();
 
+// quit on ctrl-c in docker
+process.on('SIGINT', function() {
+  process.exit();
+});
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
