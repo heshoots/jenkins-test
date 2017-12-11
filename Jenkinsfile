@@ -16,6 +16,7 @@ podTemplate(label: 'mypod', containers: [
       container('docker') {
         sh """
         ls
+        ls /var/run
         docker build .
         """
       }
