@@ -5,6 +5,7 @@ podTemplate(label: 'mypod', containers: [
     stage('Build test image') {
       container('docker') {
         sh """
+        ls
         docker build -f Dockerfile.test -t nodetest .
         """
       }
