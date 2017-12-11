@@ -4,7 +4,7 @@ podTemplate(label: 'mypod', containers: [
   node('mypod') {
     stage('Run shell') {
       git 'https://github.com/heshoots/jenkins-test'
-      container('node) {
+      container('node') {
         sh """
         npm install
         ./node_modules/.bin/eslint .
