@@ -13,7 +13,12 @@ podTemplate(label: 'mypod', containers: [
       }
     }
     stage('build final image') {
-      app = docker.build("test")
+      container('docker') {
+        sh """
+        docker build -f Dockerfile.prod -t quorauk/testapi .
+        docker login --username $(cat /docker/username) --password $(cat /docker/password)
+        docker push quorauk/testapi
+        """
     }
   }
 }
