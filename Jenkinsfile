@@ -1,23 +1,18 @@
 podTemplate(label: 'mypod', containers: [
-  containerTemplate(name: 'node', image: 'node:9.2', ttyEnabled: true, command: 'cat'),
   containerTemplate(name: 'docker', image: 'docker:17.11.0-ce', ttyEnabled: true, command: 'cat')
   ]) {
   node('mypod') {
-    stage('lint') {
-      git 'https://github.com/heshoots/jenkins-test'
-      container('node') {
+    stage('Build test image') {
+      container('docker') {
         sh """
-        npm install --only-dev
-        ./node_modules/.bin/eslint .
+        docker build -f Dockerfile.test -t nodetest .
         """
       }
     }
-    stage('Build image') {
+    stage('run test image') {
       container('docker') {
         sh """
-        ls
-        ls /var/run
-        docker build .
+        docker run -it nodetest
         """
       }
     }
