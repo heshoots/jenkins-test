@@ -16,7 +16,9 @@ podTemplate(label: 'mypod', containers: [
       container('docker') {
         sh """
         docker build -f Dockerfile.prod -t quorauk/testapi .
-        docker login --username \${cat /docker/username} --password \${cat /docker/password}
+        USER=\$(cat /docker/username)
+        PASS=\$(cat /docker/password)
+        docker login --username \$USER --password \$PASS
         docker push quorauk/testapi
         """
       }
