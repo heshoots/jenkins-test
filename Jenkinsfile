@@ -19,6 +19,7 @@ podTemplate(label: 'mypod', containers: [
         docker login --username $(cat /docker/username) --password $(cat /docker/password)
         docker push quorauk/testapi
         """
+      }
     }
   }
 }
