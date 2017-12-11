@@ -9,17 +9,18 @@ podTemplate(label: 'mypod', containers: [
         sh """
         npm install
         npm run lint
+        node -p "require('./package.json').version" > version
         """
       }
     }
     stage('build final image') {
       container('docker') {
         sh """
-        docker build -f Dockerfile.prod -t quorauk/testapi .
+        docker build -f Dockerfile.prod -t quorauk/testapi:\$(cat version) .
         USER=\$(cat /docker/username.txt)
         PASS=\$(cat /docker/password.txt)
         docker login --username \$USER --password \$PASS
-        docker push quorauk/testapi
+        docker push quorauk/testapi:\$(cat version)
         """
       }
     }
