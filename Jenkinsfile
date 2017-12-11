@@ -1,6 +1,6 @@
 podTemplate(label: 'mypod', containers: [
   containerTemplate(name: 'node', image: 'node:9.2', ttyEnabled: true, command: 'cat'),
-  containerTemplate(name: 'node', image: 'docker:17.11.0-ce', ttyEnabled: true, command: 'cat')
+  containerTemplate(name: 'docker', image: 'docker:17.11.0-ce', ttyEnabled: true, command: 'cat')
   ]) {
   node('mypod') {
     stage('lint') {
