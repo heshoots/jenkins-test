@@ -2,5 +2,4 @@ FROM node:9-alpine
 EXPOSE 3000
 WORKDIR /app
 ADD . /app
-RUN npm install --only-production
 CMD ["node", "bin/www"]
