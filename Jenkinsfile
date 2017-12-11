@@ -13,11 +13,7 @@ podTemplate(label: 'mypod', containers: [
       }
     }
     stage('build final image') {
-      container('docker') {
-        sh """
-        docker build -f Dockerfile.prod -t nodetest .
-        """
-      }
+      docker.build("test", "-f Dockerfile.prod")
     }
   }
 }
