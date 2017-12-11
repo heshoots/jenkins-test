@@ -15,6 +15,7 @@ podTemplate(label: 'mypod', containers: [
     stage('Build image') {
       container('docker') {
         sh """
+        ls
         docker build .
         """
       }
