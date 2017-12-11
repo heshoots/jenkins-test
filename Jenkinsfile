@@ -13,7 +13,7 @@ podTemplate(label: 'mypod', containers: [
       }
     }
     stage('build final image') {
-      app = docker.build("test"")
+      app = docker.build("test")
     }
   }
 }
