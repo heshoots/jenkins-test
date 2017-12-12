@@ -8,7 +8,7 @@ podTemplate(label: 'docker',
     stage('Build Docker image') {
       git 'https://github.com/heshoots/jenkins-test'
       container('docker') {
-        sh "docker build ${image} ."
+        sh "docker build -t ${image} ."
       }
     }
   }
