@@ -1,5 +1,5 @@
 podTemplate(label: 'docker',
-  containers: [containerTemplate(name: 'docker', image: '17.11.0-ce', ttyEnabled: true, command: 'cat')],
+  containers: [containerTemplate(name: 'docker', image: 'docker:17.11.0-ce', ttyEnabled: true, command: 'cat')],
   volumes: [hostPathVolume(hostPath: '/var/run/docker.sock', mountPath: '/var/run/docker.sock')]
   ) {
 
