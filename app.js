@@ -10,7 +10,7 @@ const users = require('./routes/users');
 const app = express();
 
 // quit on ctrl-c in docker
-process.on('SIGINT', function () => {
+process.on('SIGINT', function ayy() => {
   process.exit();
 });
 
