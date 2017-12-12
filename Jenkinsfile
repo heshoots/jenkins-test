@@ -12,7 +12,7 @@ podTemplate(label: 'docker',
       }
       stage('Test test image') {
         sh "docker run --rm ${imageName} sh -c 'npm run lint'"
-        def version = sh "docker run --rm ${imageName} sh -c node -e 'console.log(require(\'./package.json\').version)'
+        def version = sh "docker run --rm ${imageName} sh -c node -e 'console.log(require(\'./package.json\').version)'"
       }
       stage('Build production image') {
         sh "docker build -f Dockerfile.prod -t ${imageName}:${version} ."
