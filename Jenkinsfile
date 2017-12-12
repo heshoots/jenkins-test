@@ -10,10 +10,8 @@ podTemplate(label: 'docker',
       container('docker') {
         sh """
         docker build -f Dockerfile.test -t ${imageName} .
+        docker run -it --rm quorauk/testimage sh npm run lint
         """
-        docker.image("quorauk/testimage").inside() {
-          sh "npm run lint"
-        }
       }
     }
     stage('Upload image') {
