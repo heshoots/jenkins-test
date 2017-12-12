@@ -7,9 +7,10 @@ podTemplate(label: 'docker',
   node('docker') {
     stage('Build test image') {
       container('docker') {
+        git 'https://github.com/heshoots/jenkins-test'
         sh """
         docker build -f Dockerfile.test -t ${imageName} .
-        docker run --rm quorauk/testimage sh -c 'npm run lint'
+        docker run --rm ${imageName} sh -c 'npm run lint'
         """
       }
     }
