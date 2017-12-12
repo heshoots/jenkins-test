@@ -8,7 +8,9 @@ podTemplate(label: 'docker',
     git 'https://github.com/heshoots/jenkins-test'
     stage('Build test image') {
       container('docker') {
-        def testImage = docker.build("quorauk/testimage", "-f Dockerfile.test .")
+        sh """
+        docker build -f Dockerfile.test ${imageName} .
+        """
         docker.image("quorauk/testimage").inside() {
           sh "npm run lint"
         }
