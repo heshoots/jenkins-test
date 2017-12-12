@@ -3,6 +3,7 @@ podTemplate(label: 'docker',
   volumes: [hostPathVolume(hostPath: '/var/run/docker.sock', mountPath: '/var/run/docker.sock')]
   ) {
 
+  def versionNumber = "0.0.1"
   def imageName = "quorauk/testimage"
   node('docker') {
     container('docker') {
@@ -18,8 +19,10 @@ podTemplate(label: 'docker',
       }
       stage('Upload production image') {
         docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
-          def image = docker.image("quorauk/testimage")
-          image.push("${BUILD_NUMBER}")
+          def image = docker.image("${imageName}")
+          image.push("${versionNumber}")
+          image.push("${versionNumber}b${BUILD_NUMBER}")
+          image.push("latest")
         }
       }
     }
