@@ -1,13 +1,12 @@
 podTemplate(label: 'docker',
   containers: [containerTemplate(name: 'docker', image: 'docker:17.11.0-ce', ttyEnabled: true, command: 'cat')],
-  volumes: [hostPathVolume(hostPath: '/var/run/docker.sock', mountPath: '/var/run/docker.sock'),
-            persistentVolumeClaim(mountPath: '/home/jenkins',  claimName: 'jenkins-jenkins', readOnly: true)]
+  volumes: [hostPathVolume(hostPath: '/var/run/docker.sock', mountPath: '/var/run/docker.sock')]
   ) {
 
   def imageName = "quorauk/testimage"
   node('docker') {
     container('docker') {
-      // git 'https://github.com/heshoots/jenkins-test' ${GIT_LOCAL_BRANCH}
+      checkout scm
       stage('Build test image') {
         sh "docker build -f Dockerfile.test -t ${imageName} ."
       }
