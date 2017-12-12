@@ -3,9 +3,18 @@ podTemplate(label: 'docker',
   volumes: [hostPathVolume(hostPath: '/var/run/docker.sock', mountPath: '/var/run/docker.sock')]
   ) {
 
+  def imageName = "quorauk/testimage"
   node('docker') {
+    git 'https://github.com/heshoots/jenkins-test'
     stage('Build test image') {
-      git 'https://github.com/heshoots/jenkins-test'
+      container('docker') {
+        def testImage = docker.build("quorauk/testimage", "-f Dockerfile.test .")
+        testImage.inside() {
+          sh "npm run lint"
+        }
+      }
+    }
+    stage('Upload image') {
       container('docker') {
         docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
           sh """
