@@ -3,8 +3,8 @@ podTemplate(label: 'docker',
   volumes: [hostPathVolume(hostPath: '/var/run/docker.sock', mountPath: '/var/run/docker.sock')]
   ) {
 
-  def image = "quorauk/testimage"
-  def registry = "registry-docker-registry:8080/"
+  def image = "testimage"
+  def registry = "registry-docker-registry:5000/"
   node('docker') {
     stage('Build test image') {
       git 'https://github.com/heshoots/jenkins-test'
