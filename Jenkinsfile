@@ -12,14 +12,15 @@ podTemplate(label: 'docker',
       }
       stage('Test test image') {
         sh "docker run --rm ${imageName} sh -c 'npm run lint'"
+        def version = sh "docker run --rm ${imageName} sh -c node -e 'console.log(require(\'./package.json\').version)'
       }
       stage('Build production image') {
-        sh "docker build -f Dockerfile.prod -t ${imageName} ."
+        sh "docker build -f Dockerfile.prod -t ${imageName}:${version} ."
       }
       stage('Upload production image') {
         docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
           def image = docker.image("quorauk/testimage")
-          image.push("latest")
+          image.push(${version})
         }
       }
     }
