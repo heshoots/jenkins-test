@@ -3,16 +3,18 @@ podTemplate(label: 'docker',
   volumes: [hostPathVolume(hostPath: '/var/run/docker.sock', mountPath: '/var/run/docker.sock')]
   ) {
 
-  def image = "testimage"
-  def registry = "registry-docker-registry:5000/"
+  def image = "quorauk/testimage"
   node('docker') {
     stage('Build test image') {
       git 'https://github.com/heshoots/jenkins-test'
       container('docker') {
-        sh """
-        docker build -f Dockerfile.test -t ${registry}/${image} .
-        docker push ${registry}/${image}
-        """
+        docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
+          sh """
+          docker build -f Dockerfile.test -t ${image} .
+          """
+          def image = docker.image("quoruauk/testimage")
+          image.push("latest")
+        }
       }
     }
   }
