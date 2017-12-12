@@ -9,7 +9,7 @@ podTemplate(label: 'docker',
     stage('Build test image') {
       container('docker') {
         def testImage = docker.build("quorauk/testimage", "-f Dockerfile.test .")
-        testImage.inside() {
+        docker.image("quorauk/testimage").inside() {
           sh "npm run lint"
         }
       }
