@@ -10,7 +10,7 @@ podTemplate(label: 'docker',
       container('docker') {
         sh """
         docker build -f Dockerfile.test -t ${imageName} .
-        docker run -it --rm quorauk/testimage sh npm run lint
+        docker run --rm quorauk/testimage sh -c 'npm run lint'
         """
       }
     }
