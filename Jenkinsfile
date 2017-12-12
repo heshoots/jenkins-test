@@ -14,7 +14,7 @@ podTemplate(label: 'docker',
         sh "docker run --rm ${imageName} sh -c 'npm run lint'"
       }
       stage('Build production image') {
-        sh "docker build -f Dockerfile.prod -t ${imageName}:${version} ."
+        sh "docker build -f Dockerfile.prod -t ${imageName} ."
       }
       stage('Upload production image') {
         docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
