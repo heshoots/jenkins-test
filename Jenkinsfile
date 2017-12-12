@@ -1,6 +1,7 @@
 podTemplate(label: 'docker',
   containers: [containerTemplate(name: 'docker', image: 'docker:17.11.0-ce', ttyEnabled: true, command: 'cat')],
-  volumes: [hostPathVolume(hostPath: '/var/run/docker.sock', mountPath: '/var/run/docker.sock')]
+  volumes: [hostPathVolume(hostPath: '/var/run/docker.sock', mountPath: '/var/run/docker.sock'),
+            persistentVolumeClaim(mountPath: '/home/jenkins',  claimName: 'jenkins-jenkins', readOnly: true)]
   ) {
 
   def imageName = "quorauk/testimage"
