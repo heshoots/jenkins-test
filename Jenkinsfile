@@ -4,13 +4,14 @@ podTemplate(label: 'docker',
   ) {
 
   def image = "quorauk/testimage"
+  def registry = "registry-docker-registry:8080/"
   node('docker') {
     stage('Build test image') {
       git 'https://github.com/heshoots/jenkins-test'
       container('docker') {
         sh """
-        docker build -f Dockerfile.test -t ${image} .
-        docker push ${image}
+        docker build -f Dockerfile.test -t ${registry}/${image} .
+        docker push ${registry}/${image}
         """
       }
     }
