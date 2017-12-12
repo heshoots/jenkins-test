@@ -3,9 +3,7 @@ pipeline {
 
   stages {
     stage('Test') {
-      agent {
-        docker { dockerfile true }
-      }
+      agent { dockerfile true }
       steps {
         sh """
           npm install
