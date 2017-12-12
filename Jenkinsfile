@@ -5,10 +5,13 @@ podTemplate(label: 'docker',
 
   def image = "quorauk/testimage"
   node('docker') {
-    stage('Build Docker image') {
+    stage('Build test image') {
       git 'https://github.com/heshoots/jenkins-test'
       container('docker') {
-        sh "docker build -t ${image} ."
+        sh """
+        docker build -f Dockerfile.test -t ${image} .
+        docker push ${image}
+        """
       }
     }
   }
