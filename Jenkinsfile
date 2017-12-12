@@ -6,7 +6,7 @@ podTemplate(label: 'docker',
   def imageName = "quorauk/testimage"
   node('docker') {
     container('docker') {
-      git 'https://github.com/heshoots/jenkins-test'
+      git 'https://github.com/heshoots/jenkins-test' ${GIT_LOCAL_BRANCH}
       stage('Build test image') {
         sh "docker build -f Dockerfile.test -t ${imageName} ."
       }
